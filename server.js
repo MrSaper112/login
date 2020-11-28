@@ -1,7 +1,7 @@
 var express = require("express")
 var app = express()
-// const PORT = process.env.PORT 
-const PORT = 80
+const PORT = process.env.PORT 
+//const PORT = 80
 var path = require("path")
 
 app.use(express.static('static'))
