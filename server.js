@@ -1,6 +1,7 @@
 var express = require("express")
 var app = express()
-const PORT = process.env.PORT 
+// const PORT = process.env.PORT 
+const PORT = 80
 var path = require("path")
 
 app.use(express.static('static'))
@@ -8,10 +9,10 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 accounts = [
-    { id: 0, log: 'tomek', passw: 't1', wiek: 11, uczen: 'on', plec: 'm' },
-    { id: 1, log: 'adam', passw: 'a1', wiek: 19, uczen: 'on', plec: 'm' },
-    { id: 2, log: 'aga', passw: 'g1', wiek: 15, uczen: 'on', plec: 'k' },
-    { id: 3, log: 'julka', passw: 'j1', wiek: 19, uczen: 'undefined', plec: 'k' }
+    { id: 0, log: 'tomek', passw: 't1', wiek: 11, uczen: 'checked', plec: 'm' },
+    { id: 1, log: 'adam', passw: 'a1', wiek: 19, uczen: '', plec: 'm' },
+    { id: 2, log: 'aga', passw: 'g1', wiek: 15, uczen: 'checked', plec: 'k' },
+    { id: 3, log: 'julka', passw: 'j1', wiek: 19, uczen: '', plec: 'k' }
 ]
 var activeAccount = []
 //Przesyłanie formularzy
@@ -123,7 +124,13 @@ app.get("/show", function (req, res) {
         div = "<table class=\"line\">"
         accounts.sort(function (a, b) { return a.id - b.id; });
         for (item of accounts) {
-            string = "<tr><td>" + "Id: " + item.id + "</td>" + "<td>" + "User: " + item.log + " - " + item.passw + "</td>" + "<td>" + "Wiek: " + item.wiek + "</td>" + "<td>" + "Uczeń: " + item.uczen + "</td>" + "<td>" + "Płeć: " + item.plec + "</td></tr>"
+            var img =""
+            if(item.uczen != ""){
+                img = "<img style=\"width: 20px;height: 20px;\"src=\"/img/c.png\">"
+            }else{
+                img = "<img style=\"width: 20px;height: 20px;\"src=\"/img/n.png\">"
+            }
+            string = "<tr><td>" + "Id: " + item.id + "</td>" + "<td>" + "User: " + item.log + " - " + item.passw + "</td>" + "<td>" + "Wiek: " + item.wiek + "</td>" + "<td>" + "Uczeń: " + img + "</td>" + "<td>" + "Płeć: " + item.plec + "</td></tr>"
             mainSide += string
         }
         res.send(side + div + mainSide + "</table>")
